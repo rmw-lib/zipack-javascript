@@ -29,7 +29,8 @@
   ],
   "type": "module",
   "devDependencies": {
-    "coffeescript": "^2.5.1"
+    "coffeescript": "^2.5.1",
+    "tape": "^5.0.1"
   },
   "dependencies": {}
 }

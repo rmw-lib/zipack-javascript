@@ -318,28 +318,28 @@ function encodeString(string) {
 }
 
 //
-function encodeList(list, layer) {
-  layer++;
-  if (layer > 50) throw new Error("嵌套层数溢出");
+function encodeList(list) {
+  // layer++;
+  // if (layer > 50) throw new Error("嵌套层数溢出");
 
   // 小列表还是大列表
   const tobeUint8Array =
     list.length < 32
     ? [_list_0 | list.length]
     : [_list, [...nature2vlq(list.length - 32)]];
-  for(var o of list){
-    // tobeUint8Array = tobeUint8Array.concat()
-    for(var j of encode(o, layer)){
+  for(let o of list){
+    for(let j of encode(o)){
       tobeUint8Array.push(j)
     }
   }
   return Uint8Array.from(tobeUint8Array);
 }
 
+
 //
-function encodeMap(map, layer) {
-  layer++;
-  if (layer > 50) throw new Error("嵌套层数溢出");
+function encodeMap(map) {
+  // layer++;
+  // if (layer > 50) throw new Error("嵌套层数溢出");
 
   const keyValues = Object.entries(map);
 
@@ -349,16 +349,18 @@ function encodeMap(map, layer) {
     ? [_map_0 | keyValues.length]
     : [_map, ...nature2vlq(keyValues.length - 32)];
 
-  keyValues.forEach(([k, v]) => {
+  for(let [k,v] of keyValues) {
     k = scsu.encode(k);
     tobeUint8Array.push(...nature2vlq(k.length));
     tobeUint8Array.push(...string2vlqs(k));
-    tobeUint8Array.push(...encode(v, layer));
-  });
+    for(let j of encode(v)){
+      tobeUint8Array.push(j);
+    }
+  }
   return Uint8Array.from(tobeUint8Array);
 }
 
-function encode(obj, layer) {
+function encode(obj) {
   const type = typeof obj;
   if (type === "number") {
     return encodeNumber(obj);
@@ -370,9 +372,9 @@ function encode(obj, layer) {
     // null undefined
     return new Uint8Array([_null]);
   } else if (obj.constructor === Array) {
-    return encodeList(obj, layer);
+    return encodeList(obj);
   } else if (obj.constructor === Object) {
-    return encodeMap(obj, layer);
+    return encodeMap(obj);
   } else if (obj.constructor === ArrayBuffer) {
     const byteLength = nature2vlq(obj.byteLength);
     const buffer = new Uint8Array(obj);
@@ -380,12 +382,12 @@ function encode(obj, layer) {
   } else if (obj.zipack) {
     const result = obj.zipack();
     if (result instanceof Uint8Array) return result;
-    else return encode(result, layer);
+    else return encode(result);
   } else {
     const description = obj.toString
       ? obj.toString()
       : Object.prototype.toString.call(obj);
-    return encode(description, layer);
+    return encode(description);
   }
 }
 
@@ -398,6 +400,6 @@ export const load = (zipack) => {
 };
 export const dump = (obj) => {
   const layer = 0;
-  return encode(obj, layer);
+  return encode(obj);
 };
 export const extension = { _undefined, _undefined_0, _undefined_1, typeTable };
