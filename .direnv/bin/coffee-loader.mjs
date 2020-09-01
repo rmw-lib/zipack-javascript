@@ -11,7 +11,7 @@ import {
 
 import CoffeeScript from 'coffeescript';
 
-const IGNORE = new Set('js mjs wasm'.split(' '));
+const IGNORE = new Set('js mjs wasm json'.split(' '));
 const baseURL = pathToFileURL(process.cwd() + '/').href;
 
 // CoffeeScript files end in .coffee, .litcoffee or .coffee.md.

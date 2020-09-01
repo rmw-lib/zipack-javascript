@@ -3,7 +3,9 @@
 import scsu from './scsu.js'
 import * as zipack from './zipack.js'
 import * as zspack from './zspack.js'
+import tjson from './t.json'
 
+console.log zspack.dump(tjson)
 
 test = (str)=>
 
