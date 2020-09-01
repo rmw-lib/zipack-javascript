@@ -5,7 +5,8 @@ import * as zipack from './zipack.js'
 import * as zspack from './zspack.js'
 import tjson from './t.json'
 
-console.log zspack.dump(tjson)
+console.log tjson
+console.log zspack.load zspack.dump(tjson)
 
 test = (str)=>
 

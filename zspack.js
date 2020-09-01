@@ -327,10 +327,12 @@ function encodeList(list, layer) {
     list.length < 32
     ? [_list_0 | list.length]
     : [_list, [...nature2vlq(list.length - 32)]];
-
-  list.forEach((o) => {
-    tobeUint8Array.push(...encode(o, layer));
-  });
+  for(var o of list){
+    // tobeUint8Array = tobeUint8Array.concat()
+    for(var j of encode(o, layer)){
+      tobeUint8Array.push(j)
+    }
+  }
   return Uint8Array.from(tobeUint8Array);
 }
 
