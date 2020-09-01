@@ -1,0 +1,35 @@
+{
+  "name": "zspack",
+  "version": "0.0.1",
+  "description": "Zipack.js + scsu",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "exports": {
+    ".": "./zspack.js",
+    "./scsu": "./scsu.js"
+  },
+  "files": [
+    "/zspack.js",
+    "/scsu.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rmw-lib/zspack.git"
+  },
+  "author": "Jim",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/rmw-lib/zspack/issues"
+  },
+  "homepage": "https://github.com/rmw-lib/zspack#readme",
+  "keywords": [
+    "zipack",
+    "zspack"
+  ],
+  "type": "module",
+  "devDependencies": {
+    "coffeescript": "^2.5.1"
+  },
+  "dependencies": {}
+}
